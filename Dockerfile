@@ -1,10 +1,10 @@
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda
 #  - see: "LATEST CUDA XXXX"
-FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
+FROM nvidia/cuda:12.5.1-devel-ubuntu24.04
 
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.description="Up-to-date CUDA container built to be a one-click runnable Hashtopolis agent to use on Vast.ai."
-LABEL org.opencontainers.image.source=https://github.com/ThatOnePasswordWas40Passwords/vast-hashtopolis-runner
+LABEL org.opencontainers.image.source=https://github.com/johanoskarsson/vast-hashtopolis-runner
 
 ENV DEBIAN_FRONTEND=NONINTERACTIVE
 
@@ -31,8 +31,8 @@ RUN groupadd -g 1001 hashtopolis-user && \
 USER hashtopolis-user
 WORKDIR /home/hashtopolis-user
 
-#RUN git clone https://github.com/hashtopolis/agent-python.git && \
-#  cd agent-python && \
-#  ./build.sh && \
-#  mv hashtopolis.zip ../ && \
-#  cd ../ && rm -R agent-python
+RUN git clone https://github.com/hashtopolis/agent-python.git && \
+ cd agent-python && \
+ ./build.sh && \
+ mv hashtopolis.zip ../ && \
+ cd ../ && rm -R agent-python
