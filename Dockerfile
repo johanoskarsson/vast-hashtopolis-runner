@@ -1,6 +1,6 @@
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda
 #  - see: "LATEST CUDA XXXX"
-FROM nvidia/cuda:12.5.1-devel-ubuntu24.04
+FROM nvidia/cuda:13.0.1-devel-ubuntu24.04
 
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.description="Up-to-date CUDA container built to be a one-click runnable Hashtopolis agent to use on Vast.ai."
