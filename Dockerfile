@@ -1,6 +1,4 @@
-# https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda
-#  - see: "LATEST CUDA XXXX"
-FROM nvidia/cuda:12.5.1-devel-ubuntu24.04
+FROM nvidia/cuda:12.3.2-devel-ubuntu22.04
 
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.description="Up-to-date CUDA container built to be a one-click runnable Hashtopolis agent to use on Vast.ai."
@@ -21,6 +19,13 @@ RUN apt update && apt-get upgrade -y && apt install -y --no-install-recommends \
   curl && \
   rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /etc/OpenCL/vendors && \
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd && \
+    echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
+    echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
+
+ENV PATH=/usr/local/nvidia/bin:${PATH}
+ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
 
 RUN groupadd -g 1001 hashtopolis-user && \
     useradd -g 1001 -u 1001 -m hashtopolis-user -s /bin/bash && \
